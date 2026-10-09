@@ -8,9 +8,16 @@
 // It is already used in DashboardPage.jsx to wrap an admin-only section.
 // Right now it shows that section to everyone — fix that here.
 // ────────────────────────────────────────────────────────────
+
 import { useAuth } from "../auth/AuthContext.jsx";
 
-export default function RoleGate({ requiredRole, children }) {
-  // TODO: replace this passthrough with a real role check.
+export default function RoleGate({ children, requiredRole }) {
+  const { user } = useAuth();
+
+  if (user?.role !== requiredRole) {
+    return null;
+  }
+
   return children;
 }
+
